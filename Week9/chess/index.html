@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced DOM Applications</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="apps-grid">
+            <div class="app-section">
+                <h2>♟️ Chessboard Generator</h2>
+                <div class="controls">
+                    <label>
+                        Rows:
+                        <input type="number" id="rowsInput" value="8" min="2" max="20">
+                    </label>
+                    <label>
+                        Columns:
+                        <input type="number" id="colsInput" value="8" min="2" max="20">
+                    </label>
+                    <label>
+                        Size:
+                        <input type="number" id="sizeInput" value="60" min="20" max="100">
+                    </label>
+                    <button id="generateBtn">Generate Board</button>
+                </div>
+                <div id="chessboardContainer">
+                    <div id="chessboard"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const rowsInput = document.getElementById('rowsInput');
+        const colsInput = document.getElementById('colsInput');
+        const sizeInput = document.getElementById('sizeInput');
+        const generateBtn = document.getElementById('generateBtn');
+        const chessboard = document.getElementById('chessboard');
+
+        generateChessboard();
+        generateBtn.addEventListener('click', generateChessboard);
+
+        function generateChessboard() {
+            const rows = parseInt(rowsInput.value);
+            const cols = parseInt(colsInput.value);
+            const squareSize = parseInt(sizeInput.value);
+
+            if (rows < 2 || rows > 20 || cols < 2 || cols > 20) {
+                alert('Please enter rows and columns between 2 and 20');
+                return;
+            }
+
+            if (squareSize < 20 || squareSize > 100) {
+                alert('Please enter square size between 20 and 100');
+                return;
+            }
+
+            chessboard.innerHTML = '';
+            chessboard.style.gridTemplateColumns = `repeat(${cols}, ${squareSize}px)`;
+            chessboard.style.gridTemplateRows = `repeat(${rows}, ${squareSize}px)`;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const square = document.createElement('div');
+                    square.className = 'chess-square';
+                    const isWhite = (row + col) % 2 === 0;
+                    square.style.backgroundColor = isWhite ? '#f0d9b5' : '#b58863';
+                    const coordinate = `${String.fromCharCode(65 + col)}${rows - row}`;
+                    square.textContent = coordinate;
+                    square.style.color = isWhite ? '#b58863' : '#f0d9b5';
+                    square.addEventListener('mouseenter', function() { this.style.opacity = '0.7'; });
+                    square.addEventListener('mouseleave', function() { this.style.opacity = '1'; });
+                    chessboard.appendChild(square);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

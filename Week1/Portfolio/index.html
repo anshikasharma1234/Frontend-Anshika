@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container">
+      <h1 class="logo">My Portfolio</h1>
+      <nav>
+        <ul>
+          <li><a href="#about">About me</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section id="hero">
+    <div class="hero-content">
+      <figure class="profile-pic">
+        <img src="Anshika.jpg" alt="Anshika Sharma">
+      </figure>
+      <h2 id="typewriter"></h2>
+      <p>Aspiring Web Developer | Student</p>
+      <a href="#contact" class="btn">Get in Touch</a>
+    </div>
+  </section>
+
+
+  <main class="container">
+    <!-- ===== About ===== -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I am a motivated Computer Science student passionate about web development,
+        problem-solving, and building impactful digital solutions. I aim to contribute
+        my skills to meaningful projects and continuously grow in the tech field.
+      </p>
+    </section>
+
+    <!-- ===== Education ===== -->
+    <section id="education">
+      <h2>Education</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Bachelor of Computer Science</h3>
+          <p>GLA University (2024–2028)</p>
+          <P>Full-Stack Development and AI</P>
+        </div>
+        <div class="card">
+          <h3>Senior Secondary (XII)</h3>
+          <p>M.G.M Senior Secondary School (2022)</p>
+          <p>PCM with Computer Science</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul class="skills-list">
+        <li>HTML & CSS</li>
+        <li>JavaScript & JAVA</li>
+        <li>Python</li>
+        <li>C++</li>
+        <li>Git & GitHub</li>
+      </ul>
+    </section>
+
+    <!-- ===== Contact ===== -->
+      
+  <section id="contact">
+  <h2>Contact Me</h2>
+  <div class="contact-icons">
+    <a href="tel:+919058188352" target="_blank"><i class="fas fa-phone"></i></a>
+    <a href="mailto:anshika18sharma123@email.com" target="_blank"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.linkedin.com/in/anshika-sharma-2b73b332a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a href="https://github.com/anshikasharma1234" target="_blank"><i class="fab fa-github"></i></a>
+  </div>
+
+
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>&copy; <span id="year"></span> Your Name. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <script>
+  // Typewriter effect
+  const text = "Hi, I'm Anshika Sharma";  
+  let i = 0;
+  const speed = 100; // typing speed in ms
+
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById("typewriter").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  window.onload = typeWriter;
+</script>
+
+</body>
+</html>

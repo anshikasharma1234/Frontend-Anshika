@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Finder</title>
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 University Finder</h1>
+            <p>Discover universities from around the world</p>
+        </div>
+
+        <div class="search-box">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="countryInput" 
+                    placeholder="Enter country name (e.g., India, Canada, Japan)"
+                    autocomplete="off"
+                >
+                <button id="searchBtn">Search</button>
+            </div>
+            <div class="examples">
+                <strong>Try:</strong> United States, United Kingdom, Australia, Germany, France,India
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Searching for universities...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="results-info" id="resultsInfo"></div>
+
+        <div class="no-results" id="noResults">
+            <h3>😕 No Universities Found</h3>
+            <p>Try searching for a different country or check your spelling.</p>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+     
+        const countryInput = document.getElementById('countryInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsDiv = document.getElementById('results');
+        const loadingDiv = document.getElementById('loading');
+        const errorDiv = document.getElementById('errorMessage');
+        const noResultsDiv = document.getElementById('noResults');
+        const resultsInfoDiv = document.getElementById('resultsInfo');
+
+    
+        searchBtn.addEventListener('click', searchUniversities);
+
+   
+        countryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchUniversities();
+            }
+        });
+
+   
+        async function searchUniversities() {
+           
+            const country = countryInput.value.trim();
+
+    
+            if (country === '') {
+                showError('Please enter a country name!');
+                return;
+            }
+
+            clearResults();
+
+       
+            loadingDiv.classList.add('show');
+            searchBtn.disabled = true;
+
+            try {
+           
+                const response = await fetch(
+                    `https://universities.hipolabs.com/search?country=${encodeURIComponent(country)}`
+                );
+
+             
+                if (!response.ok) {
+                    throw new Error('Failed to fetch universities. Please try again.');
+                }
+                const universities = await response.json();
+
+                loadingDiv.classList.remove('show');
+                searchBtn.disabled = false;
+
+           
+                if (universities.length === 0) {
+                    noResultsDiv.classList.add('show');
+                    return;
+                }
+
+              
+                displayResults(universities, country);
+
+            } catch (error) {
+              
+                loadingDiv.classList.remove('show');
+                searchBtn.disabled = false;
+                showError(error.message || 'Something went wrong. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+   
+        function displayResults(universities, country) {
+     
+            resultsInfoDiv.innerHTML = `
+                <h3>Found ${universities.length} ${universities.length === 1 ? 'university' : 'universities'} in ${country}</h3>
+            `;
+            resultsInfoDiv.classList.add('show');
+
+         
+            universities.forEach(uni => {
+            
+                const card = document.createElement('div');
+                card.className = 'university-card';
+
+               
+                card.innerHTML = `
+                    <h3>${uni.name}</h3>
+                    
+                    ${uni['state-province'] ? `
+                        <div class="university-info">
+                            <strong>📍 Location:</strong>
+                            <span>${uni['state-province']}</span>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="university-info">
+                        <strong>🌐 Website:</strong>
+                        <span>${uni.web_pages && uni.web_pages.length > 0 ? uni.web_pages[0] : 'N/A'}</span>
+                    </div>
+                    
+                    ${uni.web_pages && uni.web_pages.length > 0 ? `
+                        <a href="${uni.web_pages[0]}" target="_blank" class="website-link">
+                            Visit Website →
+                        </a>
+                    ` : ''}
+                `;
+
+                resultsDiv.appendChild(card);
+              
+            });
+        }
+
+    
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            
+            
+            setTimeout(() => {
+                errorDiv.classList.remove('show');
+            }, 5000);
+        }
+
+     
+        function clearResults() {
+            resultsDiv.innerHTML = '';
+            errorDiv.classList.remove('show');
+            noResultsDiv.classList.remove('show');
+            resultsInfoDiv.classList.remove('show');
+        }
+    </script>
+</body>
+</html>

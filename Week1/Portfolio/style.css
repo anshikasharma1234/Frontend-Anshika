@@ -1,0 +1,241 @@
+/* ===== Global ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f9fafb;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ===== Header ===== */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0ea5e9;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #0ea5e9;
+}
+
+/* ===== Hero ===== */
+.profile-pic img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid #0077cc;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-pic img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(0, 119, 204, 0.5);
+}
+
+
+
+/* Smooth fade + drop animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#hero {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(14,165,233,0.85), rgba(14,165,233,0.85)), url('hero-bg.jpg') center/cover no-repeat;
+  color: #fff;
+  padding: 2rem;
+}
+
+#hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+#hero span {
+  color: #fffacd;
+}
+
+#hero .btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background: #fff;
+  color: #0ea5e9;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+#hero .btn:hover {
+  background: #f1f5f9;
+}
+
+/* ===== Sections ===== */
+section {
+  margin: 3rem 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #0ea5e9;
+}
+
+/* ===== About ===== */
+#about {
+  text-align: center;
+}
+
+#about img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid #0ea5e9;
+  margin-bottom: 1rem;
+}
+
+/* ===== Education ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #0ea5e9;
+}
+
+/* ===== Skills ===== */
+.skills-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.skills-list li {
+  background: #e0f2fe;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #0369a1;
+}
+
+#contact {
+  padding: 60px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+#contact h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.contact-icons a {
+  font-size: 2.5rem;
+  color: #0077cc;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.contact-icons a:hover {
+  color: #005fa3;
+  transform: scale(1.2);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+#typewriter {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  display: inline-block;
+  border-right: 2px solid #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { border-color: transparent; }
+  51%, 100% { border-color: #fff; }
+}

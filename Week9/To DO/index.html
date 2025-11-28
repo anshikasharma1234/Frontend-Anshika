@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature-Rich To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="apps-grid">
+            <div class="app-section">
+                <h2>📝 Feature-Rich To-Do List</h2>
+                <div class="todo-input-container">
+                    <input type="text" id="todoInput" placeholder="Enter a new task..." autocomplete="off">
+                    <button id="addBtn">Add Task</button>
+                </div>
+
+                <ul id="todoList">
+                    <div class="empty-state">
+                        <span>📋</span>
+                        <p>No tasks yet. Add one to get started!</p>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const addBtn = document.getElementById('addBtn');
+        const todoList = document.getElementById('todoList');
+
+        let taskIdCounter = 0;
+
+        addBtn.addEventListener('click', addTask);
+        todoInput.addEventListener('keypress', e => { if (e.key === 'Enter') addTask(); });
+
+        function addTask() {
+            const taskText = todoInput.value.trim();
+            if (!taskText) { alert('Please enter a task!'); return; }
+
+            const emptyState = todoList.querySelector('.empty-state');
+            if (emptyState) emptyState.remove();
+
+            const taskId = taskIdCounter++;
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+            li.dataset.id = taskId;
+            li.innerHTML = `
+                <input type="checkbox" class="todo-checkbox">
+                <span class="todo-text">${taskText}</span>
+                <div class="todo-actions">
+                    <button class="todo-btn up-btn" onclick="moveUp(${taskId})">↑ Up</button>
+                    <button class="todo-btn down-btn" onclick="moveDown(${taskId})">↓ Down</button>
+                    <button class="todo-btn delete-btn" onclick="deleteTask(${taskId})">🗑️ Delete</button>
+                </div>
+            `;
+
+            li.querySelector('.todo-checkbox').addEventListener('change', function() {
+                li.classList.toggle('completed', this.checked);
+            });
+
+            todoList.appendChild(li);
+            todoInput.value = '';
+            todoInput.focus();
+            updateButtonStates();
+        }
+
+        function moveUp(taskId) {
+            const task = document.querySelector(`[data-id="${taskId}"]`);
+            const prev = task.previousElementSibling;
+            if (prev) { todoList.insertBefore(task, prev); updateButtonStates(); }
+        }
+
+        function moveDown(taskId) {
+            const task = document.querySelector(`[data-id="${taskId}"]`);
+            const next = task.nextElementSibling;
+            if (next) { todoList.insertBefore(next, task); updateButtonStates(); }
+        }
+
+        function deleteTask(taskId) {
+            const task = document.querySelector(`[data-id="${taskId}"]`);
+            task.remove();
+            updateButtonStates();
+            if (!todoList.querySelector('.todo-item')) {
+                todoList.innerHTML = `
+                    <div class="empty-state">
+                        <span>📋</span>
+                        <p>No tasks yet. Add one to get started!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function updateButtonStates() {
+            const tasks = todoList.querySelectorAll('.todo-item');
+            tasks.forEach((task, index) => {
+                task.querySelector('.up-btn').disabled = index === 0;
+                task.querySelector('.down-btn').disabled = index === tasks.length - 1;
+            });
+        }
+    </script>
+</body>
+</html>
